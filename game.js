@@ -925,7 +925,6 @@
         ctx.restore();
     }
 
-    // ─── Canvas Feedback Text ──────────────────────────────
     function drawCanvasFeedback(layout) {
         if (state.gameState !== 'fail') return;
 
@@ -938,19 +937,25 @@
 
         ctx.save();
         ctx.globalAlpha = alpha;
-        ctx.font = '800 22px Nunito';
+        const fontSize = W < 500 ? 16 : 22;
+        ctx.font = `800 ${fontSize}px Nunito`;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
 
-        const tx = cliffX + cliffWidth + 50;
+        const tw = ctx.measureText(text).width + (W < 500 ? 20 : 28);
+        const th = W < 500 ? 28 : 36;
+        
+        let tx = cliffX + cliffWidth + (W < 500 ? 20 : 50);
+        if (tx + tw / 2 > W - 10) {
+            tx = W - 10 - tw / 2;
+        }
         const ty = cliffTopY + 30;
-        const tw = ctx.measureText(text).width + 28;
-        const th = 36;
 
         // Pill bg
-        ctx.fillStyle = 'rgba(255,59,92,0.12)';
+        const isDark = getComputedStyle(document.documentElement).getPropertyValue('--bg').trim() === '#1a1b2e' || document.documentElement.getAttribute('data-theme') === 'dark';
+        ctx.fillStyle = isDark ? 'rgba(255,107,138,0.2)' : 'rgba(255,59,92,0.15)';
         ctx.beginPath();
-        ctx.roundRect(tx - tw / 2, ty - th / 2, tw, th, 18);
+        ctx.roundRect(tx - tw / 2, ty - th / 2, tw, th, th / 2);
         ctx.fill();
 
         ctx.fillStyle = COLORS.danger;
