@@ -696,7 +696,9 @@
 
         const bw = maxW + padding * 2;
         const bh = lines.length * lineHeight + padding * 1.5;
-        const bx = x - bw / 2;
+        let bx = x - bw / 2;
+        if (bx < 10) bx = 10;
+        if (bx + bw > W - 10) bx = W - 10 - bw;
         const by = y - bh;
 
         // Shadow
