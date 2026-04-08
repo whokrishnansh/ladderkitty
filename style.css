@@ -529,7 +529,7 @@ body {
 }
 
 /* ===== RESPONSIVE ===== */
-@media (max-width: 900px) {
+@media (max-width: 992px) {
     #side-panel {
         width: 200px;
     }
@@ -539,21 +539,61 @@ body {
     }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
     #game-header {
         padding: 10px 16px;
     }
     .header-left h1 {
-        font-size: 15px;
+        display: none; /* Hide title on very small screens to save space */
+    }
+    #game-main {
+        flex-direction: column;
+    }
+    #side-panel {
+        width: 100%;
+        padding: 10px;
+        flex-direction: column;
+        border-top: 1px solid rgba(45, 49, 66, 0.08);
+    }
+    [data-theme="dark"] #side-panel {
+        border-top-color: rgba(255, 255, 255, 0.08);
+    }
+    .options-col {
+        flex-direction: row;
+        justify-content: center;
+        gap: 12px;
     }
     .option-btn {
-        width: 80px;
-        height: 65px;
-        font-size: 24px;
+        flex: 1;
+        height: 55px;
+        font-size: 22px;
     }
     .options-prompt {
         font-size: 13px;
-        padding: 6px 18px;
+        padding: 6px 16px;
+        margin: 0 auto;
+        width: fit-content;
+    }
+    .hint-bar {
+        justify-content: center;
+    }
+    .feedback-card, .gameover-card, .success-card {
+        padding: 24px;
+        width: 90%;
+    }
+    .gameover-emoji, .success-card .sc-emoji, .feedback-card .fb-emoji {
+        font-size: 40px;
+        margin-bottom: 8px;
+    }
+    .success-card .sc-title, .gameover-card h2, .feedback-card .fb-title {
+        font-size: 22px;
+    }
+    .formula-box {
+        padding: 12px;
+        margin-bottom: 16px;
+    }
+    .formula-line {
+        font-size: 18px;
     }
 }
 

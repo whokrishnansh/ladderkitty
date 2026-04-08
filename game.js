@@ -213,12 +213,19 @@
 
     // ─── GEOMETRY HELPERS ──────────────────────────────────
     function getLayout() {
-        const topMargin = 100;   // space for kitten + speech bubble
-        const bottomPad = 50;   // space below ground for base label
-        const leftPad = 80;
+        let topMargin = 100;   // space for kitten + speech bubble
+        let bottomPad = 50;   // space below ground for base label
+        let leftPad = 80;
         // Cliff visual width
         const cliffWidth = Math.max(40, Math.min(60, W * 0.05));
-        const rightPad = cliffWidth + 80;   // cliff + arrow + height label
+        let rightPad = cliffWidth + 80;   // cliff + arrow + height label
+
+        if (W < 500) {
+            topMargin = 80;
+            bottomPad = 40;
+            leftPad = 40;
+            rightPad = cliffWidth + 50;
+        }
 
         const groundY = H - bottomPad;
 
@@ -443,17 +450,18 @@
 
         // Base label
         const baseMid = (boyX + cliffX) / 2;
-        drawLabel(`${state.base} m`, baseMid, groundY + 24, 16, COLORS.label);
+        const fontSize = W < 500 ? 13 : 16;
+        drawLabel(`${state.base} m`, baseMid, groundY + (W < 500 ? 18 : 24), fontSize, COLORS.label);
 
         // Height label (to the right of the cliff building)
         const heightMid = (groundY + cliffTopY) / 2;
-        drawLabel(`${state.height} m`, cliffX + cliffWidth + 40, heightMid, 16, COLORS.label);
+        drawLabel(`${state.height} m`, cliffX + cliffWidth + (W < 500 ? 25 : 40), heightMid, fontSize, COLORS.label);
 
         // Question mark on hypotenuse
         if (state.gameState === 'idle') {
-            const qx = (boyX + cliffX) / 2 - 30;
+            const qx = (boyX + cliffX) / 2 - (W < 500 ? 15 : 30);
             const qy = (groundY + cliffTopY) / 2 - 10;
-            ctx.font = '700 28px Nunito';
+            ctx.font = `700 ${W < 500 ? 20 : 28}px Nunito`;
             ctx.fillStyle = COLORS.question;
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
